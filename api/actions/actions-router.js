@@ -8,7 +8,7 @@ const router = express.Router();
 router.get(`/:id`, (req, res) => {
     const {id} = req.params;
 
-    Post.findById(id)
+    Post.get(id)
         .then(action => {
             if(action) {
                 res.status(200).json(action);
@@ -26,8 +26,8 @@ router.get(`/:id`, (req, res) => {
 router.post('/', (req, res) => {
     const action = req.body;
 
-    if( !action.title || !action.contents ) {
-        res.status(400).json({ message: "Please provide title and contents for the action" });
+    if( !action.project_id || !action.description || action.notes) {
+        res.status(400).json({ message: "Please provide project_id, description, and notes for the action" });
     } else {
         Actions.insert(action)
             .then(p => {
@@ -49,8 +49,8 @@ router.put('/:id', (req, res) => {
         .then(p => {
             if(!p) {
                 res.status(404).json({ message: "The action with the specified ID does not exist" });
-            } else if ( !action.title || !action.contents ) {
-                res.status(400).json({ message: "Please provide title and contents for the action" });
+            } else if ( !action.project_id || !action.description || action.notes) {
+                res.status(400).json({ message: "Please provide project_id, description, and notes for the action" });
             } else {
                 res.status(200).json(action);
             };
