@@ -81,7 +81,7 @@ router.delete('/:id', (req, res) => {
 });
 
 
-router.get('/:id', (req, res) => {
+router.get('/:id/actions', (req, res) => {
     const {id} = req.params;
 
     Projects.getProjectActions(id)
